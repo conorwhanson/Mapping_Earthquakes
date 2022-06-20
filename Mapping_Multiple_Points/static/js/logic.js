@@ -1,5 +1,5 @@
 // Add console.log to see if code is working
-console.log("Yep. It's working");
+console.log("Yep. It's working. Multiple point mapping engage!!");
 
 // Add a map object with center and zoom level
 let map = L.map("map").setView([40.7, -94.5], 4);

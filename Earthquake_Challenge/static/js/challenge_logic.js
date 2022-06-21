@@ -1,5 +1,6 @@
 // Add console.log to check to see if our code is working.
-console.log("working");
+// **********LOOK AT WORLD CUP ACTIVITY FOR CUSTOM CIRCLES FOR EARTHQUAKES**********
+console.log("let's get quaking");
 
 // We create the tile layer that will be the background of our map.
 let streets = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/streets-v11/tiles/{z}/{x}/{y}?access_token={accessToken}', {

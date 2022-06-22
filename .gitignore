@@ -12,13 +12,6 @@ __pycache__/
 # config.js
 config.js
 
-<<<<<<< HEAD
-=======
-
-# json
-majorAirports.json
->>>>>>> 2eb0a688d99a01af3197fa8f0b479f298de04810
-
 # Distribution / packaging
 .Python
 build/

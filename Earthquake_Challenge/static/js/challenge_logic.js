@@ -17,7 +17,7 @@ let satelliteStreets = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/sate
 });
 
 // Create the map object with center, zoom level and default layer.
-let map = L.map('mapid', {
+let map = L.map('map', {
 	center: [40.7, -94.5],
 	zoom: 3,
 	layers: [streets]
@@ -34,6 +34,7 @@ let allEarthquakes = new L.LayerGroup();
 
 
 // 2. Add a reference to the tectonic plates group to the overlays object.
+// add a new key for tectonic plates???????????
 let overlays = {
   "Earthquakes": allEarthquakes
 };

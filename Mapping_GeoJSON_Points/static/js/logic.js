@@ -2,7 +2,7 @@
 console.log("Let's map them quakes.");
 
 // Add a map object with center and zoom level
-let map = L.map("map").setView([37.5, -122.5], 10);
+let map = L.map("map").setView([30, 30], 2);
 
 // GeoJSON point
 // L.geoJSON(sanFranAirport, {
@@ -14,12 +14,12 @@ let map = L.map("map").setView([37.5, -122.5], 10);
 // }).addTo(map);
 
 // Add point using onEachFeature to add popup marker
-L.geoJSON(sanFranAirport, {
-    onEachFeature: function(feature, layer) {
-        console.log(layer);
-      layer.bindPopup("<h6> Airport Code: " + feature.properties.faa + "</h6><hr><h6>Airport Name: " + feature.properties.name + "</h6>");
-     }
-}).addTo(map);
+// L.geoJSON(sanFranAirport, {
+//     onEachFeature: function(feature, layer) {
+//         console.log(layer);
+//       layer.bindPopup("<h6> Airport Code: " + feature.properties.faa + "</h6><hr><h6>Airport Name: " + feature.properties.name + "</h6>");
+//      }
+// }).addTo(map);
 
 // We create the tile layer that will be the background of our map.
 let streets = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/streets-v11/tiles/{z}/{x}/{y}?access_token={accessToken}', {
@@ -27,6 +27,16 @@ let streets = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/streets-v11/t
     maxZoom: 18,
     accessToken: API_KEY
 });
+
 // Then we add our 'graymap' tile layer to the map.
 streets.addTo(map);
 
+// Create JSON url variable
+let airportData = "https://https://raw.githubusercontent.com/conorwhanson/Mapping_Earthquakes/Mapping_GeoJSON_Points/Mapping_GeoJSON_Points/majorAirports.json"
+
+// Get the JSON data
+d3.json(airportData).then(function(data) {
+    console.log(data);
+  // Creating a GeoJSON layer with the retrieved data.
+  L.geoJSON(data).addTo(map);
+});

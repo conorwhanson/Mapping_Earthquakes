@@ -1,31 +1,51 @@
+// STEP 0: GET DATA
+var torontoData = "https://raw.githubusercontent.com/conorwhanson/Mapping_Earthquakes/main/torontoRoutes.json";
+
 // Add console.log to see if code is working
-console.log("Let's map them quakes.");
+d3.json(torontoData).then(function(data){
+    console.log(data);
+    console.log("Let's map them quakes.");
+    L.geoJSON(data, {
+        style: myStyle
+    }).addTo(map);
+});
 
-// Add a map object with center and zoom level
-let map = L.map("map").setView([37.5, -122.5], 10);
+var myStyle = {
+    "color": "yellow",
+    "weight": 2,
+    "opacity": 0.7
+};
 
-// GeoJSON point
-// L.geoJSON(sanFranAirport, {
-//     // turn each feature into a marker using pointToLayer
-//     pointToLayer: function(feature, latlng) {
-//         console.log(feature);
-//         return L.marker(latlng).bindPopup("<h2>" + feature.properties.name + "</h2><hr><h3>" + feature.properties.city + ", ", "<h3>" + feature.properties.country + "</h3>");
-//     }
-// }).addTo(map);
-
-// Add point using onEachFeature to add popup marker
-L.geoJSON(sanFranAirport, {
-    onEachFeature: function(feature, layer) {
-        console.log(layer);
-      layer.bindPopup("<h6> Airport Code: " + feature.properties.faa + "</h6><hr><h6>Airport Name: " + feature.properties.name + "</h6>");
-     }
-}).addTo(map);
-
+// STEP 1: CREATE THE BASE LAYERS
 // We create the tile layer that will be the background of our map.
-let streets = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/streets-v11/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+
+var light = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/light-v10/tiles/{z}/{x}/{y}?access_token={accessToken}', {
     attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
     maxZoom: 18,
     accessToken: API_KEY
 });
-// Then we add our 'graymap' tile layer to the map.
-streets.addTo(map);
+
+var dark = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/dark-v10/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+    attribution: 'Map data © <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery (c) <a href="https://www.mapbox.com/">Mapbox</a>',
+    maxZoom: 18,
+    accessToken: API_KEY
+});
+
+// STEP 2: OVERLAYS
+
+// STEP 3: DICTS FOR LAYERS
+var baseMaps = {
+    Light: light,
+    Dark: dark
+};
+
+// STEP 4: INITIALIZE MAP
+var map = L.map("map", {
+    center: [44.0, -80.0],
+    zoom: 3,
+    layer: [light]
+});
+
+// STEP 5: LAYER CONTROLS
+L.control.layers(baseMaps).addTo(map);
+light.addTo(map);

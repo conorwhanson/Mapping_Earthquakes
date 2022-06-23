@@ -6,8 +6,12 @@ d3.json(torontoData).then(function(data){
     console.log(data);
     console.log("Let's map them quakes.");
     L.geoJSON(data, {
-        style: myStyle
-    }).addTo(map);
+        style: myStyle,
+        onEachFeature: function(feature, layer) {
+            layer.bindPopup("<h6> Airline: " + feature.properties.airline + "</h6><hr><h6> Destination: " + feature.properties.dst + "</h6>")
+        }
+    })
+    .addTo(map);
 });
 
 var myStyle = {

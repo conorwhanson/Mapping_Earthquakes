@@ -4,8 +4,35 @@ var neighborhoods = "https://raw.githubusercontent.com/conorwhanson/Mapping_Eart
 // Add console.log to see if code is working
 d3.json(neighborhoods).then(function(data){
     console.log(data);
-    console.log("Let's map them quakes.");
-    L.geoJSON(data).addTo(map);
+    console.log("Working. Let's see them 'gons!");
+    L.geoJSON(data, {
+        style: function(feature) {
+            return {
+                color: "blue",
+                fillColor: "yellow",
+                fillOpacity: 0.5,
+                weight: 1
+            };
+        },
+        onEachFeature: function(feature, layer) {
+            layer.bindPopup(`<h1>${feature.properties.AREA_NAME}</h1>`);
+
+            // event listeners
+            layer.on({
+                mouseover: function(event) {
+                    let layer_target = event.target;
+                    layer_target.setStyle({ fillOpacity: 1 });
+                },
+                mouseout: function(event) {
+                    let layer_target = event.target;
+                    layer_target.setStyle({ fillOpacity: 0.5 });
+                },
+                click: function(event) {
+                    myMap.fitBounds(event.target.getBounds());
+                }
+            });
+        }
+    }).addTo(map);
 });
 
 // STEP 1: CREATE THE BASE LAYERS
@@ -34,8 +61,8 @@ var baseMaps = {
 // STEP 4: INITIALIZE MAP
 var map = L.map("map", {
     center: [43.7, -79.3],
-    zoom: 3,
-    layers: [satelliteStreets]
+    zoom: 11,
+    layers: [streets]
 });
 
 // STEP 5: LAYER CONTROLS

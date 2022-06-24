@@ -23,6 +23,7 @@ let map = L.map('map', {
 	layers: [streets]
 });
 
+
 // Create a base layer that holds all three maps.
 let baseMaps = {
   "Streets": streets,
@@ -139,11 +140,14 @@ legend.onAdd = function() {
   };
 
   // Finally, we our legend to the map.
-  legend.addTo(map);
+legend.addTo(map);
 
 
   // 3. Use d3.json to make a call to get our Tectonic Plate geoJSON data.
-  d3.json().then(() {
-    
-  });
+d3.json("https://raw.githubusercontent.com/fraxen/tectonicplates/master/GeoJSON/PB2002_boundaries.json").then(function(plateData) {
+    console.log(plateData);
+    let plateLayer = L.geoJson(plateData);
+    overlays["Tectonic Plates"] = plateLayer;
+    L.control.layers(baseMaps, overlays).addTo(map);
+});
 });

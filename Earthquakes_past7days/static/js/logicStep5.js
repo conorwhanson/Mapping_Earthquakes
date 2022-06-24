@@ -72,8 +72,9 @@ d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geoj
 
     // STEP 2: OVERLAYS
     let earthquakes = new L.layerGroup();
-    quakeCircles.addTo(earthquakes);
     
+    quakeCircles.addTo(earthquakes);
+
     // STEP 3: DICTS FOR LAYERS
     var baseMaps = {
         "Streets": streets,
@@ -93,7 +94,8 @@ d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geoj
 
     // STEP 5: LAYER CONTROLS
     L.control.layers(baseMaps, overlays).addTo(map);
-
+    earthquakes.addTo(map);
+    
     // Legend
     let legend = L.control({
         position: 'bottomright'
